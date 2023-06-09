@@ -1,4 +1,4 @@
-package myPaint;
+package com.ict.project1.team3.SeatChart.Sketch;
 
 import java.awt.Dimension;
 import java.awt.FileDialog;
@@ -27,7 +27,12 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 
-public class DrawFrame extends JFrame {
+import com.ict.project1.team3.basicClass.OIS_Basic;
+import com.ict.project1.team3.basicClass.OOS_Baisc;
+import com.ict.project1.team3.basicClass.VO_Basic;
+
+// ATT에서 숫자입력하는 창에 소수점 들어간 실수를 붙여넣기 했을 때 예외처리 필요
+public class SketchChartFrame extends JFrame {
 
 	JPanel p_north, p_south, p_west, p_east;
 
@@ -47,17 +52,17 @@ public class DrawFrame extends JFrame {
 	private LinkedList<Rectangle> undoList = null;
 	private LinkedList<Rectangle> redoList = null;
 
+	// 기본 배경 이미지
 	String pathBackImage = "src/images/SeatChart01.png";
 
 	Image backImg = null;
 	int backImgWidth = 0;
 	int backImgHeight = 0;
 
-	String pathFile = "D:/njm/SeatList.ser";
-	String nameFile = null;
+	String pathFile = null;
 
-	OIS_SeatChart ois_SeatChart = null;
-	OOS_SeatChart oos_SeatChart = null;
+	OIS_Basic<Rectangle> ois_SeatChart = null;
+	OOS_Baisc<Rectangle> oos_SeatChart = null;
 
 	final Point DEFAULT_BTN_POINT = new Point(0, 0);
 	private Point btnPoint = DEFAULT_BTN_POINT;
@@ -77,11 +82,11 @@ public class DrawFrame extends JFrame {
 	private int drawWidth = DEFAULT_BTN_SIZE;
 	private int drawHeight = DEFAULT_BTN_SIZE;
 
-	public DrawFrame() {
-		super("사각 찍기");
+	public SketchChartFrame() {
+		super("Sketch SeatChart");
 
-		ois_SeatChart = new OIS_SeatChart();
-		oos_SeatChart = new OOS_SeatChart();
+		ois_SeatChart = new OIS_Basic<Rectangle>();
+		oos_SeatChart = new OOS_Baisc<Rectangle>();
 
 		jmb = new JMenuBar();
 		m_file = new JMenu("File");
@@ -216,8 +221,8 @@ public class DrawFrame extends JFrame {
 					JOptionPane.showMessageDialog(getParent(), "열기 실패");
 				} else {
 					if (btnList.size() > 0) {
-						VO_SeatChart saveData = new VO_SeatChart(pathBackImage, btnList);
-						if (oos_SeatChart.writeSeatChart(tmpPath, saveData)) {
+						VO_Basic<Rectangle> saveData = new VO_Basic<Rectangle>(pathBackImage, btnList);
+						if (oos_SeatChart.writeObject(tmpPath, saveData)) {
 							JOptionPane.showMessageDialog(getParent(), "저장 성공");
 						} else {
 							JOptionPane.showMessageDialog(getParent(), "저장 실패");
@@ -239,8 +244,8 @@ public class DrawFrame extends JFrame {
 					JOptionPane.showMessageDialog(getParent(), "열기 실패");
 				} else { // 올바른 유형의 파일이 아닐 경우 예외처리 필요
 					pathFile = tmpPath;
-					VO_SeatChart loadData = null;
-					if ((loadData = ois_SeatChart.readSeatChart(pathFile)) != null) {
+					VO_Basic<Rectangle> loadData = null;
+					if ((loadData = ois_SeatChart.readObject(pathFile)) != null) {
 						undoList.clear();
 						redoList.clear();
 						pathBackImage = loadData.getBackImgSrcPath();
@@ -556,6 +561,6 @@ public class DrawFrame extends JFrame {
 	}
 
 	public static void main(String[] args) {
-		new DrawFrame();
+		new SketchChartFrame();
 	}
 }

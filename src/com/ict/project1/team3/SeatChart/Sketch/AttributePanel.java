@@ -1,4 +1,4 @@
-package myPaint;
+package com.ict.project1.team3.SeatChart.Sketch;
 
 import java.awt.Point;
 import java.awt.event.KeyEvent;
@@ -11,7 +11,7 @@ import javax.swing.JPanel;
 import javax.swing.text.NumberFormatter;
 
 public class AttributePanel extends JPanel implements KeyListener {
-	DrawFrame parent = null;
+	SketchChartFrame parent = null;
 
 	JLabel l_pointX, l_pointY, l_btnWidth, l_btnHeight, l_btnColNum, l_btnRowNum, l_btnColGap, l_btnRowGap;
 	JFormattedTextField ftf_pointX, ftf_pointY, ftf_btnWidth, ftf_btnHeight, ftf_btnColNum, ftf_btnRowNum,
@@ -21,7 +21,7 @@ public class AttributePanel extends JPanel implements KeyListener {
 
 	final int DEFAULT_COLUMNS = 2;
 
-	public AttributePanel(DrawFrame source) {
+	public AttributePanel(SketchChartFrame source) {
 
 		parent = source;
 		l_pointX = new JLabel("X");

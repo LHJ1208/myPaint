@@ -1,27 +1,25 @@
-package myPaint;
+package com.ict.project1.team3.basicClass;
 
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.ObjectInputStream;
 
-// ObjectInputStream : 객체 입력 스트림
-// readObject() : 객체 역직렬화 메서드
-
-public class OIS_SeatChart {
+public class OIS_Basic<T> {
 	private FileInputStream fis = null;
 	private BufferedInputStream bis = null;
 	private ObjectInputStream ois = null;
 
-	public VO_SeatChart readSeatChart(String pathName) {
-		VO_SeatChart result = null;
+	public VO_Basic<T> readObject(String pathName) {
+		VO_Basic<T> result = null;
 
 		if (checkPathName(pathName)) {
 			try {
 				openAll(pathName);
 
 				// 객체 역직렬화
-				result = (VO_SeatChart) ois.readObject();
+				result = (VO_Basic<T>) readObject();
 
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -35,14 +33,18 @@ public class OIS_SeatChart {
 		return result;
 	}
 
-	private void openAll(String pathName) throws Exception {
+	protected Object readObject() throws ClassNotFoundException, IOException {
+		return ois.readObject();
+	}
+	
+	protected void openAll(String pathName) throws Exception {
 		File file = new File(pathName);
 		fis = new FileInputStream(file);
 		bis = new BufferedInputStream(fis);
 		ois = new ObjectInputStream(bis);
 	}
 
-	private boolean closeAll() {
+	protected boolean closeAll() {
 		boolean result = true;
 		try {
 			if (ois != null) {

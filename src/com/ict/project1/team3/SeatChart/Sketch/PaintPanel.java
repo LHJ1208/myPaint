@@ -1,4 +1,4 @@
-package myPaint;
+package com.ict.project1.team3.SeatChart.Sketch;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import javax.swing.JPanel;
 
 public class PaintPanel extends JPanel {
-	private DrawFrame parent = null;
+	private SketchChartFrame parent = null;
 	private ArrayList<Rectangle> btnList = null;
 
 	private Image backImg = null;
@@ -27,7 +27,7 @@ public class PaintPanel extends JPanel {
 	int r2 = (int) (Math.random() * 256);
 	int r3 = (int) (Math.random() * 256);
 
-	public PaintPanel(DrawFrame source) {
+	public PaintPanel(SketchChartFrame source) {
 		parent = source;
 		setInit();
 		// setOpaque(true); //투명하게
